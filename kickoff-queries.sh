@@ -1,6 +1,8 @@
 #!/bin/sh
 
-DIR=es-kickoff-queries
+echo "querying Elasticsearch for cluster status and statistics..."
+
+DIR=es-cluster-status-$(date +%Y%m%d%H%M%S)
 HOST=localhost
 PORT=9200
 mkdir $DIR
@@ -12,7 +14,7 @@ curl -s "$HOST:$PORT/_nodes?all&pretty" > $DIR/nodes.all.pretty.json
 curl -s "$HOST:$PORT/_nodes/stats?all&pretty" > $DIR/nodes.stats.all.pretty.json
 
 tar cvf $DIR.tar $DIR
-#gzip $DIR.tar
+gzip $DIR.tar
 
 echo "done."
 
