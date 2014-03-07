@@ -6,7 +6,16 @@ DIR=es-cluster-status-$(date +%Y%m%d%H%M%S)
 HOST=localhost
 PORT=9200
 
+# make sure Elasticsearch is running on the specified $HOST:$PORT
+RUNNING=`curl -s -I "$HOST:$PORT"|grep -c '200 OK'`
 
+if [ $RUNNING != 1 ]
+then
+  echo Elasticsearch not running at $HOST:$PORT
+  exit;
+fi
+
+# looks good - let's run the queries
 mkdir $DIR
 curl -s "$HOST:$PORT/_cluster/health?pretty" > $DIR/cluster.health.pretty.json
 curl -s "$HOST:$PORT/_mapping?pretty" > $DIR/mapping.pretty.json
