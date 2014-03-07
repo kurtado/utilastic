@@ -5,7 +5,10 @@ echo "querying Elasticsearch for cluster status and statistics..."
 DIR=es-cluster-status-$(date +%Y%m%d%H%M%S)
 HOST=localhost
 PORT=9200
+
+
 mkdir $DIR
+curl -s "$HOST:$PORT/_cluster/health?pretty" > $DIR/cluster.health.pretty.json
 curl -s "$HOST:$PORT/_mapping?pretty" > $DIR/mapping.pretty.json
 curl -s "$HOST:$PORT/_settings?pretty" > $DIR/settings.pretty.json
 curl -s "$HOST:$PORT/_cluster/settings?pretty" > $DIR/cluster.settings.pretty.json
@@ -22,5 +25,3 @@ tar cvf $DIR.tar $DIR
 gzip $DIR.tar
 
 echo "done."
-
-
