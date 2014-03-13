@@ -1,12 +1,13 @@
 #!/bin/sh
 
-echo "querying Elasticsearch for cluster status and statistics..."
+echo "Querying Elasticsearch for cluster status and statistics..."
 
 DIR=es-cluster-status-$(date +%Y%m%d%H%M%S)
 HOST=localhost
 PORT=9200
 
 # make sure Elasticsearch is running on the specified $HOST:$PORT
+echo Checking if Elasticsearch is running at $HOST:$PORT...
 RUNNING=`curl -s -I "$HOST:$PORT"|grep -c '200 OK'`
 
 if [ $RUNNING != 1 ]
@@ -16,6 +17,8 @@ then
 fi
 
 # looks good - let's run the queries
+echo Found Elasticsearch running on $HOST:$PORT.
+echo Running cluster health and status queries...
 mkdir $DIR
 curl -s "$HOST:$PORT/_cluster/health?pretty" > $DIR/cluster.health.pretty.json
 curl -s "$HOST:$PORT/_mapping?pretty" > $DIR/mapping.pretty.json
@@ -33,4 +36,4 @@ curl -s "$HOST:$PORT/_nodes/stats/indices/fielddata/*?pretty" > $DIR/nodes.stats
 tar cvf $DIR.tar $DIR
 gzip $DIR.tar
 
-echo "done."
+echo "Done. Data collected in $DIR.tar.gz."
