@@ -20,13 +20,13 @@ fi
 echo Found Elasticsearch running on $HOST:$PORT.
 echo Running cluster health and status queries...
 mkdir $DIR
-curl -s "$HOST:$PORT/_cluster/health?pretty" > $DIR/cluster.health.pretty.json
-curl -s "$HOST:$PORT/_mapping?pretty" > $DIR/mapping.pretty.json
-curl -s "$HOST:$PORT/_settings?pretty" > $DIR/settings.pretty.json
-curl -s "$HOST:$PORT/_cluster/settings?pretty" > $DIR/cluster.settings.pretty.json
-curl -s "$HOST:$PORT/_stats?all&pretty" > $DIR/stats.all.pretty.json
-curl -s "$HOST:$PORT/_nodes?all&pretty" > $DIR/nodes.all.pretty.json
-curl -s "$HOST:$PORT/_nodes/stats?all&pretty" > $DIR/nodes.stats.all.pretty.json
+curl -s "$HOST:$PORT/_cluster/health?pretty&human" > $DIR/cluster.health.pretty.json
+curl -s "$HOST:$PORT/_mapping?pretty&human" > $DIR/mapping.pretty.json
+curl -s "$HOST:$PORT/_settings?pretty&human" > $DIR/settings.pretty.json
+curl -s "$HOST:$PORT/_cluster/settings?pretty&human" > $DIR/cluster.settings.pretty.json
+curl -s "$HOST:$PORT/_stats?all&pretty&human" > $DIR/stats.all.pretty.json
+curl -s "$HOST:$PORT/_nodes?all&pretty&human" > $DIR/nodes.all.pretty.json
+curl -s "$HOST:$PORT/_nodes/stats?all&pretty&human" > $DIR/nodes.stats.all.pretty.json
 
 # optional, but important for troubleshooting
 curl -s "$HOST:$PORT/_stats/fielddata/*?pretty" > $DIR/stats.fielddata.pretty.json
